@@ -1,0 +1,8 @@
+doc/
+bin/
+.settings/
+.outfile
+.outFileBuffered
+.outPutStreamed
+.classpath
+.project

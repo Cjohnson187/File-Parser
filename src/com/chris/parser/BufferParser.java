@@ -31,7 +31,7 @@ public class BufferParser {
  */
 	public static void main(String[] args) throws IOException {
 		String fileIn = "src/com/chris/input/master";
-		String fileOut = "outFileBuffered";
+		String fileOut = "src/com/chris/outFiles/outFileBuffered";
 		
 		ArrayList<DataBean> beanList;
 		

@@ -35,7 +35,7 @@ public class StreamParser {
 		// tab				= 9 int
 		
 		String inFile = "src/com/chris/input/master";
-		String outFile = "outPutStreamed";
+		String outFile = "src/com/chris/outFiles/outPutStreamed";
 		
 		ArrayList<DataBean> beanList;
 		

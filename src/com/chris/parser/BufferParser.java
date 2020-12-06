@@ -51,10 +51,10 @@ public class BufferParser {
 		ArrayList<DataBean> beanList = new ArrayList<>();
 		String line = null;
 		BufferedReader reader = null;
+		DataBean bean = new DataBean();
 		try {
 			reader = new BufferedReader(new FileReader(fileName));
 			while ((line = reader.readLine()) != null) {
-					DataBean bean = new DataBean();
 					bean.parse(line);
 					beanList.add(bean);
 			}
@@ -79,7 +79,7 @@ public class BufferParser {
 		try {
 			writer = new BufferedWriter(new FileWriter(fileName));
 			for (DataBean bean : beanList ) {
-				writer.write(bean.toString());
+				writer.write(bean.toString() + "\n");
 			}
 		}	
 		catch (IOException ex) {

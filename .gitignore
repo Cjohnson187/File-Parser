@@ -6,5 +6,4 @@ bin/
 .outPutStreamed
 .classpath
 .project
-src/com/chris/outFiles/outFileBuffered
-src/com/chris/outFiles/outPutStreamed
+.vscode/

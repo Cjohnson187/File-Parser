@@ -1,4 +1,4 @@
-package com.chris.parser;
+package com.chris.parserV2;
 
 import java.io.Serializable;
 

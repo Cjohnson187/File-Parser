@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
 
 /****************************************************************************
  * <b>Title</b>: parser.java
@@ -25,13 +28,7 @@ public class Parser {
 	
 	private String fileName;
 	private String fileOut = "src/com/chris/outFiles/outFileBuffered";
-	private String fileOutCaps = "src/com/chris/outFiles/outFileBufferedCaps";
-	private String fileLine = null;
-	private ArrayList<DataBean> beanList = new ArrayList<>();
-	
-	private BufferedReader reader = null;
-	private BufferedWriter writer = null;
-	private DataBean bean = new DataBean();
+	private Logger log = Logger.getLogger(Parser.class);
 	
 	/**
 	 * Constructor that takes fileName.
@@ -46,22 +43,33 @@ public class Parser {
 	 * @return
 	 * @throws IOException
 	 */
-	public ArrayList<DataBean> read() throws IOException {   // 3 things...
-		try {
-			reader = new BufferedReader(new FileReader(fileName));
+	public List<DataBean> read() throws IOException { 
+		List<DataBean> beanList = new ArrayList<>();
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+			String fileLine;
 			while ((fileLine = reader.readLine()) != null) {
-					bean.parse(fileLine);
-					beanList.add(bean);
+					beanList.add(parse(fileLine));
 			}
+		} catch (FileNotFoundException e) {
+			log.error("Unable to open file- '" + fileName + "'", e);
 		}
-		catch (FileNotFoundException e) {
-			System.out.println("Unable to open file- '" + fileName + "'");
-		}
-		finally {
-			reader.close();			
-		}
+		
 		return beanList;
 		// read a file
+	}
+	
+	public DataBean parse(String line) {
+		DataBean db = new DataBean();
+		String[] lineArray = line.split("\\s"); //  \\s = split by tab and space
+		
+		// could maybe sanitize data
+		db.setDate(lineArray[0].trim());
+		db.setTime(lineArray[1].trim());
+		db.setType(lineArray[2].trim());
+		db.setFrom(lineArray[3].trim());
+		
+		return db;
 	}
 	
 	/**
@@ -69,38 +77,14 @@ public class Parser {
 	 * @param beanList
 	 * @throws IOException
 	 */
-	public void write(ArrayList<DataBean> beanList) throws IOException {
-		try {
-			writer = new BufferedWriter(new FileWriter(fileOut));
+	public void write(List<DataBean> beanList) {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileOut))) {
+			
 			for (DataBean bean : beanList ) {
-				writer.write(bean.toString() + "\n");
+				writer.write(bean.toString());
 			}
-		}	
-		catch (IOException ex) {
-			System.out.println("Error writing to file- '" + fileOut + "'" );
-		}	
-		finally {
-			writer.close();
-		}
-	}
-	
-	/**
-	 * Alternate write method to write to a different file for the capitalized version
-	 * @param beanList
-	 * @throws IOException
-	 */
-	public void write(ArrayList<DataBean> beanList, String caps) throws IOException {
-		try {
-			writer = new BufferedWriter(new FileWriter(fileOutCaps));
-			for (DataBean bean : beanList ) {
-				writer.write(bean.toString() + "\n");
-			}
-		}	
-		catch (IOException ex) {
-			System.out.println("Error writing to file- '" + fileOut + "'" );
-		}	
-		finally {
-			writer.close();
+		} catch (IOException ex) {
+			log.error("Error writing to file- '" + fileOut + "'", ex );
 		}
 	}
 }

@@ -1,7 +1,12 @@
 package com.chris.parser;
 
+// JDK 11.x
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
+
+// Log4J 1.2.17
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 /****************************************************************************
  * <b>Title</b>: converter.java
@@ -18,7 +23,14 @@ import java.util.ArrayList;
 
 public class Converter {
 	
-	final String inFile = "src/com/chris/input/master"; // should use a properties file instead
+	public static final String IN_FILE = "/files"; // should use a properties file instead
+	
+	private Logger log = Logger.getLogger(Converter.class);
+	
+	public Converter() {
+		super();
+		BasicConfigurator.configure();
+	}
 	
 	/**
 	 * This main method is to read, save, print, convert, and print again from the input file.
@@ -26,30 +38,33 @@ public class Converter {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) {
-		Converter convert = new Converter();
 		
-		Parser parse = new Parser(convert.inFile);
+		Converter convert = new Converter();
+		convert.log.info("Starting conversion");
+		convert.process();
+		convert.log.info("Ending conversion");
+	}
+	
+	/**
+	 * 
+	 */
+	public void process() {
+		Parser parse = new Parser(IN_FILE);
 		
 		try {
-			ArrayList<DataBean> beanList = parse.read();
-			
-			//parse.write(beanList);
-
-			beanList = convert.convertCaps(beanList);
-
-			parse.write(beanList, "caps");
+			List<DataBean> beanList = parse.read();
+			beanList = convertCaps(beanList);
+			parse.write(beanList);
 
 		}catch(IOException ioe) {
-			System.out.println("IOException- " + ioe);
+			log.error("Unable to process file", ioe);
 		}
-		
-
 	}
 	
 	/*
 	 * This method Converts strings to caps using the caps converter in the DataBean class.
 	 */
-	public ArrayList<DataBean> convertCaps(ArrayList<DataBean> beanList) { 
+	public List<DataBean> convertCaps(List<DataBean> beanList) { 
 		for (DataBean bean : beanList) {
 			bean.toCaps();
 		}

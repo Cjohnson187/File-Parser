@@ -16,6 +16,10 @@ import java.io.Serializable;
  ****************************************************************************/
 
 public class DataBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7885345184137145186L;
 	private String date;
 	private String time;
 	private String type;
@@ -26,7 +30,9 @@ public class DataBean implements Serializable {
 	 * Empty constructor for file data bean
 	 */
 	public DataBean() {
+		super();
 	}
+	
 	/**
 	 * Date setter.
 	 * @param date
@@ -108,26 +114,11 @@ public class DataBean implements Serializable {
 		to = to.toUpperCase();
 	}
 	/**
-	 * Method to split each line from file reader and store each segment in the bean.
-	 * Not safe if file changes format or data it contains
-	 * @param line
-	 */
-	public void parse(String line) {
-		String[] lineArray = line.split("\\s"); //  \\s = split by tab and space
-		// could maybe sanitize data
-		setDate(lineArray[0]);
-		setTime(lineArray[1]);
-		setType(lineArray[2]);
-		setFrom(lineArray[3]);
-		// skipping arrow character between from and to
-		setTo(lineArray[5]);
-	}
-	/**
 	 *Override toString method for data bean.
 	 */
 	@Override
 	public String toString() {
-		return "Date- " + date + ", Time- " + time + " Type- " + type + ", From- " + from + ", To- " + to + " ";
+		return "Date- " + date + ", Time- " + time + " Type- " + type + ", From- " + from + ", To- " + to + " \n";
 	}
 
 

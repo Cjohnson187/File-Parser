@@ -98,6 +98,15 @@ public class DataBean implements Serializable {
 	public String getTo() {
 		return to;
 	}
+	
+	/**
+	 * Convert strings to caps
+	 */
+	public void toCaps() {
+		type = type.toUpperCase();
+		from = from.toUpperCase();
+		to = to.toUpperCase();
+	}
 	/**
 	 * Method to split each line from file reader and store each segment in the bean.
 	 * Not safe if file changes format or data it contains

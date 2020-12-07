@@ -21,7 +21,7 @@ public class Converter {
 	final String inFile = "src/com/chris/input/master"; // should use a properties file instead
 	
 	/**
-	 * This main method is to read the file
+	 * This main method is to read, save, print, convert, and print again from the input file.
 	 * @param args
 	 * @throws IOException
 	 */

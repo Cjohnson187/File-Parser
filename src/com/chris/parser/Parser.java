@@ -11,7 +11,8 @@ import java.util.ArrayList;
 /****************************************************************************
  * <b>Title</b>: parser.java
  * <b>Project</b>: FileParser
- * <b>Description: </b> CHANGE ME!!
+ * <b>Description: </b> THis class parses each line in the file using a buffer, can print, 
+ * and returns the data in an arrayList of beans to be converted.
  * <b>Copyright:</b> Copyright (c) 2020
  * <b>Company:</b> Silicon Mountain Technologies
  * 

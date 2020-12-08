@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import org.apache.log4j.Logger;
 public class Parser {
 	
 	private String fileName;
-	private String fileOut = "src/com/chris/outFiles/outFileBuffered";
+	private String fileOut = "files/outFiles/outFileBuffered";
 	private Logger log = Logger.getLogger(Parser.class);
 	
 	/**
@@ -42,8 +44,9 @@ public class Parser {
 	 * Method to build a buffer and store the beans to an array list that is returned
 	 * @return
 	 * @throws IOException
+	 * @throws ParseException 
 	 */
-	public List<DataBean> read() throws IOException { 
+	public List<DataBean> read() throws IOException, ParseException { 
 		List<DataBean> beanList = new ArrayList<>();
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -59,16 +62,20 @@ public class Parser {
 		// read a file
 	}
 	
-	public DataBean parse(String line) {
+	public DataBean parse(String line) throws ParseException {
 		DataBean db = new DataBean();
-		String[] lineArray = line.split("\\s"); //  \\s = split by tab and space
+		String[] lineArray = line.split("\\s"); 
+		for (String i : lineArray ) {
+			log.error(i);
+		}
 		
 		// could maybe sanitize data
-		db.setDate(lineArray[0].trim());
-		db.setTime(lineArray[1].trim());
+
+		db.setDate(new SimpleDateFormat("yyyy-mm-dd").parse( lineArray[0].trim()));
+		db.setTime(new SimpleDateFormat("hh:mm:ss").parse( lineArray[1].trim()));
 		db.setType(lineArray[2].trim());
 		db.setFrom(lineArray[3].trim());
-		
+		db.setTo(lineArray[5].trim());
 		return db;
 	}
 	

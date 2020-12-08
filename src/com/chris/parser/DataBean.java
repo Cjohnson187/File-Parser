@@ -1,6 +1,7 @@
 package com.chris.parser;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /****************************************************************************
  * <b>Title</b>: dataBean.java
@@ -20,8 +21,8 @@ public class DataBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7885345184137145186L;
-	private String date;
-	private String time;
+	private Date date;
+	private Date time;
 	private String type;
 	private String from;
 	private String to;
@@ -37,14 +38,14 @@ public class DataBean implements Serializable {
 	 * Date setter.
 	 * @param date
 	 */
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	/**
 	 * Time setter.
 	 * @param time
 	 */
-	public void setTime(String time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 	/**
@@ -73,14 +74,14 @@ public class DataBean implements Serializable {
 	 * Date getter.
 	 * @return
 	 */
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 	/**
 	 * Time getter.
 	 * @return
 	 */
-	public String getTime() {
+	public Date getTime() {
 		return time;
 	}
 	/**
